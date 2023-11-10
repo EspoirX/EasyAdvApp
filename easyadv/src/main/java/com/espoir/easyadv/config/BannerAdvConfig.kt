@@ -2,15 +2,15 @@ package com.espoir.easyadv.config
 
 import android.app.Activity
 import android.view.ViewGroup
-import com.espoir.easyadv.BannerAdvListener
-import com.espoir.easyadv.EasyAdv
-import com.espoir.easyadv.CallbackType
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd
+import com.espoir.easyadv.BannerAdvListener
+import com.espoir.easyadv.CallbackType
+import com.espoir.easyadv.EasyAdv
 import java.lang.ref.WeakReference
 
 open class BannerAdvConfig : BaseAdvConfig() {
-    internal var codeId: String = ""
-    internal var container: ViewGroup? = null
+    var codeId: String = ""
+    var container: ViewGroup? = null
     internal var bannerAdvListener: BannerAdvListener? = null
 
     fun setCodeId(codeId: String) = apply {
@@ -56,6 +56,7 @@ fun BannerAdvConfig.listener(listenerType: CallbackType, vararg params: Any?) {
             bannerAdvListener?.onError(params[0] as Int, params[1] as String)
             EasyAdv.globalConfig()?.bannerAdvListener?.onError(params[0] as Int, params[1] as String)
         }
+
         CallbackType.AD_LOAD -> {
             bannerAdvListener?.onBannerAdLoad(params[0] as String, params[1] as TTNativeExpressAd?)
             EasyAdv.globalConfig()?.bannerAdvListener?.onBannerAdLoad(
@@ -79,6 +80,7 @@ fun BannerAdvConfig.listener(listenerType: CallbackType, vararg params: Any?) {
                 params[1] as TTNativeExpressAd?
             )
         }
+
         else -> {}
     }
 }

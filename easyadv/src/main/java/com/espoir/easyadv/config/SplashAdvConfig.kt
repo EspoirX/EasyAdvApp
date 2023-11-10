@@ -3,16 +3,15 @@ package com.espoir.easyadv.config
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
-import com.espoir.easyadv.config.BaseAdvConfig
-import com.espoir.easyadv.EasyAdv
-import com.espoir.easyadv.CallbackType
-import com.espoir.easyadv.SplashAdvListener
 import com.bytedance.sdk.openadsdk.TTSplashAd
+import com.espoir.easyadv.CallbackType
+import com.espoir.easyadv.EasyAdv
+import com.espoir.easyadv.SplashAdvListener
 import java.lang.ref.WeakReference
 
 class SplashAdvConfig : BaseAdvConfig() {
-    internal var codeId: String = ""
-    internal var container: ViewGroup? = null
+    var codeId: String = ""
+    var container: ViewGroup? = null
     internal var splashAdvListener: SplashAdvListener? = null
 
     fun setCodeId(codeId: String) = apply {

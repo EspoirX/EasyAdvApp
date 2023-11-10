@@ -1,15 +1,14 @@
 package com.espoir.easyadv.config
 
 import android.app.Activity
-import com.espoir.easyadv.config.BaseAdvConfig
+import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd
+import com.espoir.easyadv.CallbackType
 import com.espoir.easyadv.EasyAdv
 import com.espoir.easyadv.FullScreenVideoAdvListener
-import com.espoir.easyadv.CallbackType
-import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd
 import java.lang.ref.WeakReference
 
 open class FullScreenVideoAdvConfig : BaseAdvConfig() {
-    internal var codeId: String = ""
+    var codeId: String = ""
     internal var fullScreenVideoAdvListener: FullScreenVideoAdvListener? = null
 
     fun setCodeId(codeId: String) = apply {
@@ -40,7 +39,7 @@ open class FullScreenVideoAdvConfig : BaseAdvConfig() {
         this.adCount = count
     }
 
-    fun showFullScreenVideoAdv(){
+    fun showFullScreenVideoAdv() {
         EasyAdv.showFullScreenVideoAdv(this)
     }
 }
@@ -61,6 +60,7 @@ fun FullScreenVideoAdvConfig.listener(listenerType: CallbackType, vararg params:
             fullScreenVideoAdvListener?.onFullScreenVideoAdCache(params[0] as TTFullScreenVideoAd?)
             EasyAdv.globalConfig()?.fullScreenVideoAdvListener?.onFullScreenVideoAdCache(params[0] as TTFullScreenVideoAd?)
         }
+
         CallbackType.AD_CLICK -> {
             fullScreenVideoAdvListener?.onAdClicked(params[0] as String, params[1] as TTFullScreenVideoAd?)
             EasyAdv.globalConfig()?.fullScreenVideoAdvListener?.onAdClicked(
@@ -84,6 +84,7 @@ fun FullScreenVideoAdvConfig.listener(listenerType: CallbackType, vararg params:
                 params[1] as TTFullScreenVideoAd?
             )
         }
+
         else -> {}
     }
 }
