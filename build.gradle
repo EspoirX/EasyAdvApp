@@ -3,6 +3,9 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.0'
@@ -17,6 +20,9 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
     }
 }
 
