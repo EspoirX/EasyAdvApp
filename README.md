@@ -11,6 +11,13 @@ EasyAdv 封装了 穿山甲融合 sdk ，旨在使用广告时可以更加 Easy�
 
 ## 用法：
 
+```groovy
+dependencies {
+    implementation 'com.github.EspoirX:EasyAdvApp:vX.X.x'
+}
+```
+[![](https://jitpack.io/v/EspoirX/EasyAdvApp.svg)](https://jitpack.io/#EspoirX/EasyAdvApp)
+
 ### 初始化
 ```kotlin
 EasyAdv.init(this)

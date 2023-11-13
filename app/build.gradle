@@ -36,4 +36,6 @@ dependencies {
 //    implementation "com.pangle.cn:mediation-ks-adapter:3.3.44.1"//ks adapter
 //    implementation "com.pangle.cn:mediation-gdt-adapter:4.530.1400.1" //gdt adapter
 //    implementation project(":easyadv")
+
+//    implementation 'com.github.EspoirX:EasyAdvApp:v1.0.0'
 }
