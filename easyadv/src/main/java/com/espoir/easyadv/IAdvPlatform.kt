@@ -15,6 +15,7 @@ class AdvSDKBuilder {
     var appName: String? = null
     var userId: String? = null
     var debug: Boolean = false
+    var timeOutMillis: Long = 0  //sdk超时时间，0就是没
 }
 
 interface AdvSdkInitCallback {

@@ -1,6 +1,7 @@
 package com.espoir.easyadv.config
 
 import android.app.Activity
+import com.espoir.easyadv.interceptor.AdvInterceptor
 import java.lang.ref.WeakReference
 
 open class BaseAdvConfig {

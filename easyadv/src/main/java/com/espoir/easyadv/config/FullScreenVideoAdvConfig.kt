@@ -5,6 +5,7 @@ import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd
 import com.espoir.easyadv.CallbackType
 import com.espoir.easyadv.EasyAdv
 import com.espoir.easyadv.FullScreenVideoAdvListener
+import com.espoir.easyadv.interceptor.AdvInterceptor
 import java.lang.ref.WeakReference
 
 open class FullScreenVideoAdvConfig : BaseAdvConfig() {

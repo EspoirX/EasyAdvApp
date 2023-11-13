@@ -3,8 +3,10 @@ package com.espoir.easyadv
 import android.annotation.SuppressLint
 import android.app.Application
 import com.espoir.easyadv.config.BannerAdvConfig
+import com.espoir.easyadv.config.FeedAdConfig
 import com.espoir.easyadv.config.FullScreenVideoAdvConfig
 import com.espoir.easyadv.config.GlobalAdvConfig
+import com.espoir.easyadv.config.RewardVideoAdvConfig
 import com.espoir.easyadv.config.SplashAdvConfig
 
 object EasyAdv {
@@ -18,9 +20,18 @@ object EasyAdv {
     private var splashAdvEngine: ISplashAdvEngine? = null
     private var fullScreenVideoAdvEngine: IFullScreenVideoAdvEngine? = null
     private var bannerAdvEngine: IBannerAdvEngine? = null
+    private var feedAdvEngine: IFeedAdvEngine? = null
+    private var rewardVideoEngine: IRewardVideoAdvEngine? = null
     private var advControl: AdvControl? = null
-    private var isInitSdkSuccess = false
 
+    @Volatile
+    internal var isInitSdkSuccess = false
+
+    @Volatile
+    internal var isFinishSdkInit = false
+    internal var sdkTimeOutMillis = 0L
+
+    const val ERROR_SDK = -3866
     const val ERROR_ACT = -3867
     const val ERROR_PARAM = -3868
     const val ERROR_AD_INFO = -3869
@@ -33,6 +44,7 @@ object EasyAdv {
     @JvmStatic
     fun sdkConfig(options: AdvSDKBuilder.() -> Unit) = apply {
         advSDKBuilder = AdvSDKBuilder().also { options(it) }
+        sdkTimeOutMillis = advSDKBuilder?.timeOutMillis ?: 0
     }
 
     internal fun globalConfig() = globalAdvConfig
@@ -62,15 +74,27 @@ object EasyAdv {
         bannerAdvEngine = engine
     }
 
+    @JvmStatic
+    fun setFeedAdvEngine(engine: IFeedAdvEngine) = apply {
+        feedAdvEngine = engine
+    }
+
+    @JvmStatic
+    fun setRewardVideoEngine(engine: IRewardVideoAdvEngine) = apply {
+        this.rewardVideoEngine = engine
+    }
+
     fun apply() {
         if (sInit) return
         advSDKBuilder?.let { builder ->
             sdkPlatform?.initAdvSdk(builder, object : AdvSdkInitCallback {
                 override fun onInitSuccess() {
+                    isFinishSdkInit = true
                     isInitSdkSuccess = true
                 }
 
                 override fun onInitFail(code: Int, msg: String?) {
+                    isFinishSdkInit = true
                     isInitSdkSuccess = false
                 }
             })
@@ -93,8 +117,13 @@ object EasyAdv {
     @JvmStatic
     fun bannerConfig() = BannerAdvConfig()
 
+    @JvmStatic
+    fun feedConfig() = FeedAdConfig()
+
+    @JvmStatic
+    fun rewardVideoConfig() = RewardVideoAdvConfig()
+
     internal fun showSplashAdv(config: SplashAdvConfig) {
-        if (!isInitSdkSuccess) return
         advControl?.showSplashAdv(config, splashAdvEngine)
     }
 
@@ -106,6 +135,16 @@ object EasyAdv {
     internal fun showBannerAdv(config: BannerAdvConfig) {
         if (!isInitSdkSuccess) return
         advControl?.showBannerAdv(config, bannerAdvEngine)
+    }
+
+    internal fun showFeedAdv(config: FeedAdConfig) {
+        if (!isInitSdkSuccess) return
+        advControl?.showFeedAdv(config, feedAdvEngine)
+    }
+
+    internal fun showRewardVideoAdv(config: RewardVideoAdvConfig) {
+        if (!isInitSdkSuccess) return
+        advControl?.showRewardVideoAdv(config, rewardVideoEngine)
     }
 }
 

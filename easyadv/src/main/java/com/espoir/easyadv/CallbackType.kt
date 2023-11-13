@@ -10,5 +10,7 @@ enum class CallbackType {
     AD_SKIP,
     AD_CLOSE,
     VIDEO_COMPLETE,
-    TIME_OVER
+    TIME_OVER,
+    REWARD_VERIFY,
+    REWARD_ARRIVED
 }

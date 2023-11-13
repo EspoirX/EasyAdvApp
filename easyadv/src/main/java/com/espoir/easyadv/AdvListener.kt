@@ -1,12 +1,17 @@
 package com.espoir.easyadv
 
+import android.os.Bundle
 import android.view.View
-import com.espoir.easyadv.config.BannerAdvConfig
-import com.espoir.easyadv.config.FullScreenVideoAdvConfig
-import com.espoir.easyadv.config.SplashAdvConfig
+import com.bytedance.sdk.openadsdk.TTFeedAd
 import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd
 import com.bytedance.sdk.openadsdk.TTSplashAd
+import com.bytedance.sdk.openadsdk.mediation.manager.MediationAdEcpmInfo
+import com.espoir.easyadv.config.BannerAdvConfig
+import com.espoir.easyadv.config.FeedAdConfig
+import com.espoir.easyadv.config.FullScreenVideoAdvConfig
+import com.espoir.easyadv.config.RewardVideoAdvConfig
+import com.espoir.easyadv.config.SplashAdvConfig
 
 interface SplashAdvListener {
     fun onError(code: Int, message: String?)
@@ -36,6 +41,33 @@ interface BannerAdvListener {
     fun onAdShow(codeId: String, bannerAd: TTNativeExpressAd?)
 }
 
+interface FeedAdvListener {
+    fun onError(code: Int, message: String?)
+
+    fun onFeedAdLoad(codeId: String, list: MutableList<TTFeedAd>?)
+
+    fun onFeedAdClick(codeId: String, ecpm: MediationAdEcpmInfo?)
+    fun onFeedAdShow(codeId: String, ecpm: MediationAdEcpmInfo?)
+}
+
+interface RewardVideoAdvListener {
+    fun onError(code: Int, message: String?)
+
+    fun onRewardVideoAdLoad(codeId: String, ecpm: MediationAdEcpmInfo?)
+
+    fun onRewardVideoAdShow(codeId: String, ecpm: MediationAdEcpmInfo?)
+
+    fun onAdVideoBarClick(codeId: String, ecpm: MediationAdEcpmInfo?)
+    fun onRewardVideoAdClose(codeId: String, ecpm: MediationAdEcpmInfo?, duration: Long, isPlayOver: Boolean)
+
+    fun onVideoComplete(codeId: String, ecpm: MediationAdEcpmInfo?, duration: Long, isPlayOver: Boolean)
+
+    fun onRewardVerify(rewardVerify: Boolean, rewardAmount: Int, rewardName: String?, errorCode: Int, errorMsg: String?)
+
+    fun onRewardArrived(isRewardValid: Boolean, rewardType: Int, extraInfo: Bundle?)
+
+    fun onSkippedVideo(codeId: String, ecpm: MediationAdEcpmInfo?)
+}
 
 inline fun SplashAdvConfig.setSplashAdvListener(
     crossinline onError: (code: Int, message: String?) -> Unit = { _, _ -> },
@@ -150,5 +182,107 @@ inline fun BannerAdvConfig.setBannerAdvListener(
         }
     }
     setBannerAdvListener(listener)
+    return this
+}
+
+inline fun FeedAdConfig.setFeedAdvListener(
+    crossinline onError: (code: Int, message: String?) -> Unit = { _, _ -> },
+    crossinline onFeedAdLoad: (codeId: String, list: MutableList<TTFeedAd>?) -> Unit = { _, _ -> },
+    crossinline onFeedAdClick: (codeId: String, ecpm: MediationAdEcpmInfo?) -> Unit = { _, _ -> },
+    crossinline onFeedAdShow: (codeId: String, ecpm: MediationAdEcpmInfo?) -> Unit = { _, _ -> }
+): FeedAdConfig {
+    val listener = object : FeedAdvListener {
+        override fun onError(code: Int, message: String?) {
+            onError(code, message)
+        }
+
+        override fun onFeedAdLoad(codeId: String, list: MutableList<TTFeedAd>?) {
+            onFeedAdLoad(codeId, list)
+        }
+
+        override fun onFeedAdClick(codeId: String, ecpm: MediationAdEcpmInfo?) {
+            onFeedAdClick(codeId, ecpm)
+        }
+
+        override fun onFeedAdShow(codeId: String, ecpm: MediationAdEcpmInfo?) {
+            onFeedAdShow(codeId, ecpm)
+        }
+    }
+    setFeedAdvListener(listener)
+    return this
+}
+
+
+inline fun RewardVideoAdvConfig.setRewardVideoAdvListener(
+    crossinline onError: (code: Int, message: String?) -> Unit = { _, _ -> },
+    crossinline onRewardVideoAdLoad: (codeId: String, ecpm: MediationAdEcpmInfo?) -> Unit = { _, _ -> },
+    crossinline onRewardVideoAdShow: (codeId: String, ecpm: MediationAdEcpmInfo?) -> Unit = { _, _ -> },
+    crossinline onAdVideoBarClick: (codeId: String, ecpm: MediationAdEcpmInfo?) -> Unit = { _, _ -> },
+    crossinline onRewardVideoAdClose: (
+        codeId: String,
+        ecpm: MediationAdEcpmInfo?,
+        duration: Long,
+        isPlayOver: Boolean
+    ) -> Unit = { _, _, _, _ -> },
+    crossinline onVideoComplete: (codeId: String, ecpm: MediationAdEcpmInfo?, duration: Long, isPlayOver: Boolean) -> Unit = { _, _, _, _ -> },
+    crossinline onRewardVerify: (
+        rewardVerify: Boolean,
+        rewardAmount: Int,
+        rewardName: String?,
+        errorCode: Int,
+        errorMsg: String?
+    ) -> Unit = { _, _, _, _, _ -> },
+    crossinline onRewardArrived: (isRewardValid: Boolean, rewardType: Int, extraInfo: Bundle?) -> Unit = { _, _, _ -> },
+    crossinline onSkippedVideo: (codeId: String, ecpm: MediationAdEcpmInfo?) -> Unit = { _, _ -> },
+): RewardVideoAdvConfig {
+    val listener = object : RewardVideoAdvListener {
+        override fun onError(code: Int, message: String?) {
+            onError(code, message)
+        }
+
+        override fun onRewardVideoAdLoad(codeId: String, ecpm: MediationAdEcpmInfo?) {
+            onRewardVideoAdLoad(codeId, ecpm)
+        }
+
+        override fun onRewardVideoAdShow(codeId: String, ecpm: MediationAdEcpmInfo?) {
+            onRewardVideoAdShow(codeId, ecpm)
+        }
+
+        override fun onAdVideoBarClick(codeId: String, ecpm: MediationAdEcpmInfo?) {
+            onAdVideoBarClick(codeId, ecpm)
+        }
+
+        override fun onRewardVideoAdClose(
+            codeId: String,
+            ecpm: MediationAdEcpmInfo?,
+            duration: Long,
+            isPlayOver: Boolean
+        ) {
+            onRewardVideoAdClose(codeId, ecpm, duration, isPlayOver)
+        }
+
+        override fun onVideoComplete(codeId: String, ecpm: MediationAdEcpmInfo?, duration: Long, isPlayOver: Boolean) {
+            onVideoComplete(codeId, ecpm, duration, isPlayOver)
+        }
+
+        override fun onRewardVerify(
+            rewardVerify: Boolean,
+            rewardAmount: Int,
+            rewardName: String?,
+            errorCode: Int,
+            errorMsg: String?
+        ) {
+            onRewardVerify(rewardVerify, rewardAmount, rewardName, errorCode, errorMsg)
+        }
+
+        override fun onRewardArrived(isRewardValid: Boolean, rewardType: Int, extraInfo: Bundle?) {
+            onRewardArrived(isRewardValid, rewardType, extraInfo)
+        }
+
+        override fun onSkippedVideo(codeId: String, ecpm: MediationAdEcpmInfo?) {
+            onSkippedVideo(codeId, ecpm)
+        }
+    }
+    setRewardVideoAdvListener(listener)
     return this
 }

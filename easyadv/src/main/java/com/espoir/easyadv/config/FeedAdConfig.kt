@@ -2,17 +2,18 @@ package com.espoir.easyadv.config
 
 import android.app.Activity
 import android.view.ViewGroup
-import com.bytedance.sdk.openadsdk.TTNativeExpressAd
-import com.espoir.easyadv.BannerAdvListener
+import com.bytedance.sdk.openadsdk.TTFeedAd
+import com.bytedance.sdk.openadsdk.mediation.manager.MediationAdEcpmInfo
 import com.espoir.easyadv.CallbackType
 import com.espoir.easyadv.EasyAdv
+import com.espoir.easyadv.FeedAdvListener
 import com.espoir.easyadv.interceptor.AdvInterceptor
 import java.lang.ref.WeakReference
 
-open class BannerAdvConfig : BaseAdvConfig() {
+class FeedAdConfig : BaseAdvConfig() {
     var codeId: String = ""
     var container: ViewGroup? = null
-    internal var bannerAdvListener: BannerAdvListener? = null
+    var feedAdvListener: FeedAdvListener? = null
 
     fun setCodeId(codeId: String) = apply {
         this.codeId = codeId
@@ -22,8 +23,8 @@ open class BannerAdvConfig : BaseAdvConfig() {
         this.container = container
     }
 
-    fun setBannerAdvListener(listener: BannerAdvListener) = apply {
-        this.bannerAdvListener = listener
+    fun setFeedAdvListener(listener: FeedAdvListener) = apply {
+        this.feedAdvListener = listener
     }
 
     fun setActivity(activity: Activity?) = apply {
@@ -46,39 +47,37 @@ open class BannerAdvConfig : BaseAdvConfig() {
         this.adCount = count
     }
 
-    fun showBannerAdv() {
-        EasyAdv.showBannerAdv(this)
+    fun showFeedAdv() {
+        EasyAdv.showFeedAdv(this)
     }
 }
 
-fun BannerAdvConfig.listener(listenerType: CallbackType, vararg params: Any?) {
+fun FeedAdConfig.listener(listenerType: CallbackType, vararg params: Any?) {
     when (listenerType) {
         CallbackType.ERROR -> {
-            bannerAdvListener?.onError(params[0] as Int, params[1] as String)
+            feedAdvListener?.onError(params[0] as Int, params[1] as String)
             EasyAdv.globalConfig()?.bannerAdvListener?.onError(params[0] as Int, params[1] as String)
         }
 
         CallbackType.AD_LOAD -> {
-            bannerAdvListener?.onBannerAdLoad(params[0] as String, params[1] as TTNativeExpressAd?)
-            EasyAdv.globalConfig()?.bannerAdvListener?.onBannerAdLoad(
-                params[0] as String,
-                params[1] as TTNativeExpressAd?
-            )
+            val list = params[1] as MutableList<TTFeedAd>?
+            feedAdvListener?.onFeedAdLoad(params[0] as String, list)
+            EasyAdv.globalConfig()?.feedAdvListener?.onFeedAdLoad(params[0] as String, list)
         }
 
         CallbackType.AD_CLICK -> {
-            bannerAdvListener?.onAdClicked(params[0] as String, params[1] as TTNativeExpressAd?)
-            EasyAdv.globalConfig()?.bannerAdvListener?.onAdClicked(
+            feedAdvListener?.onFeedAdClick(params[0] as String, params[1] as MediationAdEcpmInfo?)
+            EasyAdv.globalConfig()?.feedAdvListener?.onFeedAdClick(
                 params[0] as String,
-                params[1] as TTNativeExpressAd?
+                params[1] as MediationAdEcpmInfo?
             )
         }
 
         CallbackType.AD_SHOW -> {
-            bannerAdvListener?.onAdShow(params[0] as String, params[1] as TTNativeExpressAd?)
-            EasyAdv.globalConfig()?.bannerAdvListener?.onAdShow(
+            feedAdvListener?.onFeedAdShow(params[0] as String, params[1] as MediationAdEcpmInfo?)
+            EasyAdv.globalConfig()?.feedAdvListener?.onFeedAdShow(
                 params[0] as String,
-                params[1] as TTNativeExpressAd?
+                params[1] as MediationAdEcpmInfo?
             )
         }
 
