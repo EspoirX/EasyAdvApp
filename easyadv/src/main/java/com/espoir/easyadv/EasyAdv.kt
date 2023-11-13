@@ -147,24 +147,3 @@ object EasyAdv {
         advControl?.showRewardVideoAdv(config, rewardVideoEngine)
     }
 }
-
-class Test {
-//    fun init(application: Application) {
-//        //初始化
-//        EasyAdv
-//            .init(application)
-//            .sdkConfig {
-//            }
-//            .setGlobalAdvConfig {
-//            }
-//            .setPlatform()
-//            .setSplashAdvEngine()
-//            .apply()
-//        //使用
-//        EasyAdv.splashConfig()
-//            .setUserId("")
-//            .setCodeId("")
-//            .setSplashAdvListener { }
-//            .showSplashAdv()
-//    }
-}

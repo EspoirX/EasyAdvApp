@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
 //            }, onAdSkip = {
 //                toMain()
 //            }, onAdTimeOver = {
-        toMain()
+//        toMain()
 //            })
 //            .showSplashAdv()
     }
