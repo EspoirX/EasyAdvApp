@@ -18,6 +18,7 @@ package com.espoir.easyadvapp.ad
 //            EasyAdv.splashConfig()
 //                .setCodeId(codeId)
 //                .setActivity(activity)
+//                .isHotSplash(true)
 //                .setWidth(activity.getScreenWidth())
 //                .setHeight(activity.getScreenHeight())
 //                .setContainer(container)

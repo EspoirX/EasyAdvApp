@@ -34,6 +34,10 @@ class AdvControl {
             config.listener(CallbackType.ERROR, EasyAdv.ERROR_SDK, "sdk init fail")
             return
         }
+        if (config.isHotSplash) {
+            splashAdvEngine?.showSplashAdv(config)
+            return
+        }
         showSplashAdvTime = System.currentTimeMillis()
         //等待sdk初始化完成
         while (!splashAdvFlag) {

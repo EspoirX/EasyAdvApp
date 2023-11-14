@@ -2,6 +2,8 @@ package com.espoir.easyadv.config
 
 import android.app.Activity
 import android.os.Bundle
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.bytedance.sdk.openadsdk.TTAdConstant
 import com.bytedance.sdk.openadsdk.mediation.manager.MediationAdEcpmInfo
 import com.espoir.easyadv.CallbackType
@@ -16,6 +18,8 @@ class RewardVideoAdvConfig : BaseAdvConfig() {
     internal var interceptors = mutableListOf<AdvInterceptor>()
     var extraMap = hashMapOf<String, String>()
     var rewardVideoAdvListener: RewardVideoAdvListener? = null
+    internal var lifecycleOwner: LifecycleOwner? = null
+    internal var lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
 
     fun setCodeId(codeId: String) = apply {
         this.codeId = codeId
@@ -31,6 +35,11 @@ class RewardVideoAdvConfig : BaseAdvConfig() {
 
     fun setActivity(activity: Activity?) = apply {
         this.activity = WeakReference(activity)
+    }
+
+    fun lifecycle(lifecycleOwner: LifecycleOwner, lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) = apply {
+        this.lifecycleOwner = lifecycleOwner
+        this.lifeEvent = lifeEvent
     }
 
     fun setWidth(width: Int) = apply {

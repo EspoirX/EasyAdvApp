@@ -2,6 +2,8 @@ package com.espoir.easyadv.config
 
 import android.app.Activity
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd
 import com.espoir.easyadv.BannerAdvListener
 import com.espoir.easyadv.CallbackType
@@ -13,6 +15,8 @@ open class BannerAdvConfig : BaseAdvConfig() {
     var codeId: String = ""
     var container: ViewGroup? = null
     internal var bannerAdvListener: BannerAdvListener? = null
+    internal var lifecycleOwner: LifecycleOwner? = null
+    internal var lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
 
     fun setCodeId(codeId: String) = apply {
         this.codeId = codeId
@@ -28,6 +32,11 @@ open class BannerAdvConfig : BaseAdvConfig() {
 
     fun setActivity(activity: Activity?) = apply {
         this.activity = WeakReference(activity)
+    }
+
+    fun lifecycle(lifecycleOwner: LifecycleOwner, lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) = apply {
+        this.lifecycleOwner = lifecycleOwner
+        this.lifeEvent = lifeEvent
     }
 
     fun setWidth(width: Int) = apply {

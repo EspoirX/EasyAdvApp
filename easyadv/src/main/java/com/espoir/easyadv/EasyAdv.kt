@@ -124,7 +124,13 @@ object EasyAdv {
     fun rewardVideoConfig() = RewardVideoAdvConfig()
 
     internal fun showSplashAdv(config: SplashAdvConfig) {
-        advControl?.showSplashAdv(config, splashAdvEngine)
+        if (config.isHotSplash) {
+            if (isInitSdkSuccess) {
+                advControl?.showSplashAdv(config, splashAdvEngine)
+            }
+        } else {
+            advControl?.showSplashAdv(config, splashAdvEngine)
+        }
     }
 
     internal fun showFullScreenVideoAdv(config: FullScreenVideoAdvConfig) {

@@ -3,6 +3,8 @@ package com.espoir.easyadv.config
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.bytedance.sdk.openadsdk.TTSplashAd
 import com.espoir.easyadv.CallbackType
 import com.espoir.easyadv.EasyAdv
@@ -12,7 +14,10 @@ import java.lang.ref.WeakReference
 class SplashAdvConfig : BaseAdvConfig() {
     var codeId: String = ""
     var container: ViewGroup? = null
+    internal var isHotSplash: Boolean = false
     internal var splashAdvListener: SplashAdvListener? = null
+    internal var lifecycleOwner: LifecycleOwner? = null
+    internal var lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
 
     fun setCodeId(codeId: String) = apply {
         this.codeId = codeId
@@ -28,6 +33,15 @@ class SplashAdvConfig : BaseAdvConfig() {
 
     fun setActivity(activity: Activity?) = apply {
         this.activity = WeakReference(activity)
+    }
+
+    fun lifecycle(lifecycleOwner: LifecycleOwner, lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) = apply {
+        this.lifecycleOwner = lifecycleOwner
+        this.lifeEvent = lifeEvent
+    }
+
+    fun isHotSplash(isHotSplash: Boolean) = apply {
+        this.isHotSplash = isHotSplash
     }
 
     fun setWidth(width: Int) = apply {

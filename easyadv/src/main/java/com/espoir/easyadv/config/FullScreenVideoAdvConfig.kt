@@ -1,6 +1,8 @@
 package com.espoir.easyadv.config
 
 import android.app.Activity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd
 import com.espoir.easyadv.CallbackType
 import com.espoir.easyadv.EasyAdv
@@ -11,6 +13,8 @@ import java.lang.ref.WeakReference
 open class FullScreenVideoAdvConfig : BaseAdvConfig() {
     var codeId: String = ""
     internal var fullScreenVideoAdvListener: FullScreenVideoAdvListener? = null
+    internal var lifecycleOwner: LifecycleOwner? = null
+    internal var lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
 
     fun setCodeId(codeId: String) = apply {
         this.codeId = codeId
@@ -22,6 +26,11 @@ open class FullScreenVideoAdvConfig : BaseAdvConfig() {
 
     fun setActivity(activity: Activity?) = apply {
         this.activity = WeakReference(activity)
+    }
+
+    fun lifecycle(lifecycleOwner: LifecycleOwner, lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) = apply {
+        this.lifecycleOwner = lifecycleOwner
+        this.lifeEvent = lifeEvent
     }
 
     fun setWidth(width: Int) = apply {
