@@ -19,6 +19,12 @@ dependencies {
 [![](https://jitpack.io/v/EspoirX/EasyAdvApp.svg)](https://jitpack.io/#EspoirX/EasyAdvApp)
 
 ### 初始化
+先导下基本的广告sdk，因为框架里面用的是 compileOnly
+
+```gradle
+ implementation "com.pangle.cn:mediation-sdk:5.7.0.5"
+```
+
 ```kotlin
 EasyAdv.init(this)
     .sdkConfig {
