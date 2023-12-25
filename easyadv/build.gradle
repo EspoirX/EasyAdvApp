@@ -29,5 +29,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.core:core-ktx:1.5.0")
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation 'androidx.lifecycle:lifecycle-process:2.4.1'
     compileOnly "com.pangle.cn:mediation-sdk:5.7.0.5"  //融合SDK
 }

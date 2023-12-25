@@ -9,6 +9,7 @@ import com.bytedance.sdk.openadsdk.TTSplashAd
 import com.espoir.easyadv.CallbackType
 import com.espoir.easyadv.EasyAdv
 import com.espoir.easyadv.SplashAdvListener
+import kotlinx.coroutines.CoroutineScope
 import java.lang.ref.WeakReference
 
 class SplashAdvConfig : BaseAdvConfig() {
@@ -17,6 +18,7 @@ class SplashAdvConfig : BaseAdvConfig() {
     internal var isHotSplash: Boolean = false
     internal var splashAdvListener: SplashAdvListener? = null
     internal var lifecycleOwner: LifecycleOwner? = null
+    internal var scope: CoroutineScope? = null
     internal var lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
 
     fun setCodeId(codeId: String) = apply {
@@ -38,6 +40,10 @@ class SplashAdvConfig : BaseAdvConfig() {
     fun lifecycle(lifecycleOwner: LifecycleOwner, lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) = apply {
         this.lifecycleOwner = lifecycleOwner
         this.lifeEvent = lifeEvent
+    }
+
+    fun scope(scope: CoroutineScope?)  = apply {
+        this.scope = scope
     }
 
     fun isHotSplash(isHotSplash: Boolean) = apply {
