@@ -124,6 +124,8 @@ EasyAdv.splashConfig()
     .setActivity(this)
     .setWidth(getScreenWidth())
     .setHeight(getScreenHeight())
+    .lifecycle(this)
+    .scope(lifecycleScope)
     .setContainer(findViewById<FrameLayout>(R.id.adLayout))
     .setSplashAdvListener(onError = { _, _ ->
         toMain()
